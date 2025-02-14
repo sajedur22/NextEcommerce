@@ -1,0 +1,25 @@
+npx create-next-app@latest=>Next.js
+npm zustand
+npm i zustand --legacy-peer-deps
+npm install zod
+npm install prisma-D
+npm i @prisma/client
+
+=>vercel==>project deploy 
+=>connect neonDB
+
+npx prisma init->create prisma folder
+npx prisma db push=>CONNECT db
+npx prisma studio
+
+
+Header=>
+
+lucia-auth=>npm i @oslojs/encoding @oslojs/crypto
+
+lib=>prisma.ts
+
+sign-up page
+npm i lucide-react
+
+
