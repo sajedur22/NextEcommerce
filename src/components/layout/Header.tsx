@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { User } from '@prisma/client';
 import { logoutUser } from '@/actions/auth';
+import { useRouter } from 'next/navigation';
 
 const AnnouncementBar=()=>{
     return(
@@ -19,28 +20,30 @@ type HeaderProps={
     user:Omit<User,"passwordHash">|null;
 }
 const Header = ({user}:HeaderProps) => {
+    const router=useRouter();
+
     const [isOpen,setIsOpen]=useState<boolean>(true);
-    const [prevScrolly,setPrevScrolly]=useState<number>(0)
+    const [prevScrollY,setPrevScrolly]=useState<number>(0)
 
     useEffect(()=>{
         const handleScroll=()=>{
-            const currentScrolly=window.scrollY;
-            const scrolledUp=currentScrolly<prevScrolly;
+            const currentScrollY=window.scrollY;
+            const scrolledUp=currentScrollY<prevScrollY;
             if(scrolledUp){
                 setIsOpen(true);
 
-            }else if(currentScrolly>100){
+            }else if(currentScrollY>100){
                 setIsOpen(false)
 
             }
-            setPrevScrolly(currentScrolly)
+            setPrevScrolly(currentScrollY)
         }
         setPrevScrolly(window.scrollY);
         window.addEventListener('scroll',handleScroll);
         return()=>{
             window.removeEventListener('scroll',handleScroll)
         }
-    },[prevScrolly])
+    },[prevScrollY])
 
     
     
@@ -78,6 +81,7 @@ const Header = ({user}:HeaderProps) => {
                                     onClick={async(e)=>{
                                         e.preventDefault();
                                         await logoutUser();
+                                        router.refresh()
                                     }}
                                     >Sign Out</Link>
                                 </div>) : (
